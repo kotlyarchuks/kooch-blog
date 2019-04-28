@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 class PostsController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['create', 'store']);
+    }
+
     public function index()
     {
         $posts = Post::all();
@@ -18,7 +23,7 @@ class PostsController extends Controller
 
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
 
@@ -30,6 +35,7 @@ class PostsController extends Controller
         ]);
 
         Post::create($validatedData);
+        return redirect('/posts');
     }
 
 
